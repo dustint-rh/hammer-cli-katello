@@ -12,6 +12,25 @@ module HammerCLIKatello
 
     end
 
+    class ManifestHistory < HammerCLIForeman::ListCommand
+      command_name "manifest-history"
+      resource :organizations, :manifest_history
+      action :manifest_history
+      identifiers :id
+
+      option '--id', "ID", "Id of the Organization"
+
+      def request_params
+        params = method_options
+        params.update('id' => get_identifier[0])
+      end
+
+      output do
+        field :status, _("Status")
+        field :time, _("Time"), Fields::Date
+      end
+    end
+
     class InfoCommand < HammerCLIForeman::Organization::InfoCommand
       resource :organizations, :show
 
