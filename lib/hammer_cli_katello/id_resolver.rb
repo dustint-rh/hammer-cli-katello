@@ -33,4 +33,10 @@ module HammerCLIKatello
 
   end
 
+  class UuidIdResolver < IdResolver
+
+    def get_id(resource_name, options)
+      options[HammerCLI.option_accessor_name("id")] || find_resource(resource_name, options)['uuid']
+    end
+  end
 end
