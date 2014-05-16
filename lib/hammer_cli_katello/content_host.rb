@@ -1,17 +1,6 @@
 module HammerCLIKatello
 
   class ContentHostCommand < HammerCLI::AbstractCommand
-    module UuidAsIdResolvable
-      # special resolver needed since uuid is passed in
-      # as id instead of the real id
-      def self.included(base)
-        base.instance_eval do
-          def resolver
-            HammerCLIKatello::UuidIdResolver.new(super.api, HammerCLIKatello::Searchables.new)
-          end
-        end
-      end
-    end
 
     class ListCommand < HammerCLIKatello::ListCommand
       resource :systems, :index
@@ -25,7 +14,6 @@ module HammerCLIKatello
     end
 
     class InfoCommand < HammerCLIKatello::InfoCommand
-      include UuidAsIdResolvable
 
       resource :systems, :show
 
@@ -67,7 +55,6 @@ module HammerCLIKatello
     end
 
     class UpdateCommand < HammerCLIKatello::UpdateCommand
-      include UuidAsIdResolvable
       resource :systems, :update
 
       success_message _("Content host updated")
@@ -77,7 +64,6 @@ module HammerCLIKatello
     end
 
     class DeleteCommand < HammerCLIKatello::DeleteCommand
-      include UuidAsIdResolvable
       resource :systems, :destroy
 
       success_message _("Content host deleted")
@@ -87,7 +73,6 @@ module HammerCLIKatello
     end
 
     class TasksCommand < HammerCLIKatello::ListCommand
-      include UuidAsIdResolvable
       resource :systems, :tasks
 
       command_name "tasks"
