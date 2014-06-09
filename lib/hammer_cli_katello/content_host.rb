@@ -12,8 +12,11 @@ module HammerCLIKatello
       resource :systems, :index
 
       def param_to_resource(param_name)
-        my_param_name = param_name == 'environment_id' ? 'lifecycle_environment_id' : param_name
-        HammerCLIForeman.param_to_resource(my_param_name)
+        if param_name == 'environment_id'
+          HammerCLIForeman.param_to_resource('lifecycle_environment_id')
+        else
+          super
+        end
       end
 
       def get_scoped_options(resource)
