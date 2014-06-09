@@ -11,6 +11,19 @@ module HammerCLIKatello
     class ListCommand < HammerCLIKatello::ListCommand
       resource :systems, :index
 
+      def param_to_resource(param_name)
+        my_param_name = param_name == 'environment_id' ? 'lifecycle_environment_id' : param_name
+        HammerCLIForeman.param_to_resource(my_param_name)
+      end
+
+      def get_scoped_options(resource)
+        if(resource.name.to_s.include? 'environment')
+          resolver.scoped_options('environment', all_options)
+        else
+          resolver.scoped_options(resource.singular_name, all_options)
+        end
+      end
+
       output do
         field :uuid, _("ID")
         field :name, _("Name")

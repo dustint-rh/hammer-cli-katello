@@ -23,6 +23,10 @@ module HammerCLIKatello
       options[HammerCLI.option_accessor_name("id")] || find_resource(:systems, options)['uuid']
     end
 
+    def lifecycle_environment_id(options)
+      options[HammerCLI.option_accessor_name("id")] || find_resource(:lifecycle_environments, options)['id']
+    end
+
     def create_search_options(options, resource)
       return super if resource.name == :organizations
 
